@@ -20,10 +20,12 @@ use Illuminate\Support\Facades\Auth;
 //Auth::routes();
 
 
-Route::resource('api', 'App\Http\Controllers\QueryApiRestController');
+//Route::resource('api', 'App\Http\Controllers\QueryApiRestController');
 
 
-//Route::get('cliente', 'App\Http\Controllers\ClienteController@index');
+
+Route::get('/api/list', [QueryApiRestController::class, 'list']);
+
 Route::get('/', function () {
     return view('index');
 });

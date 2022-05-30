@@ -14,7 +14,37 @@ class QueryApiRestController extends Controller
      */
     public function index()
     {
-        //
+        $valor= "algo";
+        dd($valor);
+        return view('api/index');
+    }
+
+    public function list(Request $request)
+    {
+        $result = file_get_contents("http://universities.hipolabs.com/search?country=argentina"); // consume the Stooq.com API 
+
+        $objectJson = json_decode($result, true, 10);
+
+        // $client = new Client();
+
+        // $client->firstName = $request->firstName;
+        // $client->lastName = $request->lastName;
+        // $client->cuit = $request->cuit;
+        // $client->email = $request->email;
+        // $client->email_2 = $request->email_2;
+        // $client->email_3 = $request->email_3;
+        // $client->tel_1 = $request->tel_1;
+        // $client->tel_2 = $request->tel_2;
+        // $client->tel_3 = $request->tel_3;
+        // $client->comments = $request->comments;
+        // $client->deleted = $request->deleted;
+
+        // $client->save();
+
+        // return $client;
+
+        dd($objectJson);
+
     }
 
     /**
@@ -35,7 +65,7 @@ class QueryApiRestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
