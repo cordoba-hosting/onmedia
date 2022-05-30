@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\QueryApiRestController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 //Auth::routes();
 
 
-Route::resource('cliente', 'App\Http\Controllers\ClienteController');
+Route::resource('api', 'App\Http\Controllers\QueryApiRestController');
 
 
 //Route::get('cliente', 'App\Http\Controllers\ClienteController@index');
