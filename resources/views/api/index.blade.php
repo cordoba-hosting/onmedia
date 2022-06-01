@@ -31,6 +31,7 @@
 										value="" />
 								</div>
 							</div>
+							{{--}}
 							<div class="col-6">    
 								<div class="form-group">
 									<label for="idServicio">Pais: {{$servicios->count()}}</label>
@@ -41,6 +42,7 @@
 									</select>
 								</div>
 							</div>
+							{{--}}
 						</div>
 						<button class="btn btn-success" type="submit">Filtrar</button>
 
