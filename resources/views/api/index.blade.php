@@ -7,74 +7,77 @@
 	<div class="row">
 		<div class="col-md-12">
 			<!--begin::Portlet-->
-			<div class="kt-portlet">
-				<div class="kt-portlet__head">
-					<div class="kt-portlet__head-label">
-						<h3 class="kt-portlet__head-title">Servicios</h3>
+			<div>
+				<div>
+					<div>
+						<h3>Universities from <a href="https://github.com/Hipo/university-domains-list?ref=apilist.fun" target="_blank">Hipo API</a> </h3>
 					</div>
 				</div>
-				<!--begin::Form-->
-				<div class="kt-form">
-					<div class="kt-portlet__body">
-						<div class="form-group form-group-last">
-
-							@if ( session('mensaje') )
-							<div class="alert alert-success">{{ session('mensaje') }}</div>
-							@endif
-
-							@error('linea_1')
-							<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								La linea 1 es requerida
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
+				
+				
+					
+				<div class="row">
+					<form action="{{ url('/filter') }}" method="POST" enctype="multipart/form-data" id="formAltaAviso">
+						@csrf
+						<div class="row">
+							<div class="col-6">
+								<div class="form-group">
+									<label for="name">Nombre:</label>
+									<input type="text" 
+										name="name" 
+										id="name" 
+										placeholder="Name" 
+										class="form-control mb-2" 
+										value="" />
+								</div>
 							</div>
-							@enderror
-
-							@if ($errors->has('imagen'))
-							<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								Debe colocar una imagen principal
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
+							<div class="col-6">    
+								<div class="form-group">
+									<label for="idServicio">Pais: {{$servicios->count()}}</label>
+									<select class="form-control mb-2" id="idServicio" name="idServicio"  onchange="muestraPrecioServicio();" required>
+										@foreach($servicios as $servicio)
+											<option value="{{ $servicio->precio }}">{{$servicio->id}} - {{ $servicio->nombre }}</option>
+										@endforeach
+									</select>
+								</div>
 							</div>
-							@endif
 						</div>
+						<button class="btn btn-success" type="submit">Filtrar</button>
+
+					</form>
+					<div class="col-sm-6">{{--$listado->links()--}}</div>
+
+					<div class="col-sm-6"><a href="" class="btn btn-success btn-sm float-right"> Nuevo Servicio</a></div>
+
+				</div>
 
 						<div class="row">
 							<table class="table">
 								<thead>
 									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Nombre</th>
-										<th scope="col">Descripción</th>
-										<th scope="col">Precio</th>
-										<th scope="col">Periodo Facturación</th>
+										<th scope="col">Name</th>
+										<th scope="col">alpha_two_code</th>
+										<th scope="col">domains</th>
+										<th scope="col">country</th>
+										<th scope="col">state-province</th>
+										<th scope="col">web_pages</th>
                                         
 										<th scope="col"></th>
 
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($listado as $item)
+									@foreach($universityListArray as $item)
 
 									<tr>
-										<th scope="row">{{$item->id }}</th>
-										<th scope="row">{{$item->nombre}}</th>
-										<td>{{$item->descripcion}}</td>
-										<td>{{$item->precio}}</td>
-										<td>{{$item->periodo_facturacion}}</td>
+										<th scope="row">{{$item['name'] }}</th>
+										<th>{{$item['alpha_two_code'] }}</th>
+										<th>{{$item['domains'][0]}}</th>
+										<td>{{$item['country']}}</td>
+										<td>{{$item['state-province']}}</td>
+										<td>{{$item['web_pages'][0]}}</td>
                                         
-                                        <td><a href="{{url('servicio/'.$item->id.'/edit')}}" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a></td>
-										<td>
-                                            <form method="POST" action="{{route('servicio.destroy',$item->id)}}">
-                                                {{csrf_field()}}
-                                                {{method_field('DELETE')}}
-                                                <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('¿Desea borrar el servicio?');">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </td>
+                                      
 										
 
 									</tr>
@@ -86,13 +89,9 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="row">
-							<div class="col-sm-6">{{$listado->links()}}</div>
-							<div class="col-sm-6"><a href="{{route('servicio.create')}}" class="btn btn-success btn-sm float-right"> Nuevo Servicio</a></div>
-
-						</div>
-					</div>
-				</div>
+						
+					
+				
 			</div>
 		</div>
 	</div>

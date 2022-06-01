@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\QueryApiRestController;
+use App\Http\Controllers\UniversityController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,20 +17,9 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-//Auth::routes();
-
-
-//Route::resource('api', 'App\Http\Controllers\QueryApiRestController');
-
-
-
-Route::get('/api/list', [QueryApiRestController::class, 'list']);
+Route::post('/filter', [UniversityController::class, 'consumeApi']);
+Route::get('/list', [UniversityController::class, 'consumeApi']);
 
 Route::get('/', function () {
     return view('index');
 });
-
-// Route::get(
-//     '/clients', 
-//     [ClienteController::class, 'clients']
-// ); 
