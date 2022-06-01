@@ -33,6 +33,8 @@ class UniversityController extends Controller
         
     }
 
+    
+
      /**
      * consumes the Stooq.com API for a received $stock_code, saves the response in the database and sends an email with the values to the user
      * @author: Alejandro Esteban González
@@ -44,70 +46,24 @@ class UniversityController extends Controller
      */
     public function consumeApi(Request $request, Response $response)
     {
-        //$this->validator->array($args, ['stock_code' => V::noWhitespace()]); 
+        $name = ($request->name == '') ? '': $name='name='.$request->name; 
+        $country = ($request->country == '') ? '': $country='country='.str_replace(" ", "%20", $request->country ); 
+        $union = ($country != '' &&  $request->name != '') ? '&' : '';
+        $parameters = ($country != '' || $request->name != '') ? '?' : '';
 
-    //    if ($this->validator->isValid()) {  //validate the stock_code
+        $result = file_get_contents('http://universities.hipolabs.com/search'.$parameters.$country.$union.$name); // consume the API 
 
+        $universityListArray = json_decode($result, true, 10);
 
-            //verificar si parámetro existe
+        $result1 = file_get_contents('https://restcountries.com/v3.1/all');
 
-
-            $name = ($request->name == '') ? '': $name='name='.$request->name; 
-            $country = ($request->country == '') ? '': $country='country='.$request->country; 
-            $union = ($country != '' &&  $request->name != '') ? '&' : '';
-            $parameters = ($country != '' || $request->name != '') ? '?' : '';
-
-          // dd('http://universities.hipolabs.com/search'.$parameters.$country.$union.$name);
-
-            $result = file_get_contents('http://universities.hipolabs.com/search'.$parameters.$country.$union.$name); // consume the API 
-
-            $universityListArray = json_decode($result, true, 10);
-            
-            if (count($universityListArray) > 0) { //verify if the stock_code return some data
-
-               
-
-                // $university = new University;
-
-                // $university->name = $universityListArray['symbols'][0]['name'];
-                // $university->symbol = $universityListArray['symbols'][0]['symbol'];
-                // $university->open = $universityListArray['symbols'][0]['open'];
-                // $university->high = $universityListArray['symbols'][0]['high'];
-                // $university->low = $universityListArray['symbols'][0]['low'];
-                // $university->close = $universityListArray['symbols'][0]['close'];
-                // $university->user_id = $userData->data->userId;
-
-                // $stock->save(); // save the obtained data 
-
-                
-                // $data = [
-                //     'alpha_two_code' => $universityListArray['name'],
-                //     'domains' => $universityListArray['domains'],
-                //     'country' => $universityListArray['country'],
-                //     'state-province' => $universityListArray['state-province'],
-                //     'web_pages' => $universityListArray['symbols'][0]['web_pages'],
-                //     'name' => $universityListArray['symbols'][0]['name'],
-                    
-                // ];
-
-                // return view('/api/index', compact('universityListArray'));
-            } else {
-                // $response = $this->jsonResponse($response, "error", "Code $stock_code unavailable", 400);
-                // $response = $response->withStatus(400);
-            }
-        // } else {
-        //     $errors = $this->validator->getErrors();
-        //     $response = $this->jsonResponse($response, "error", $errors, 400);
-        //     $response = $response->withStatus(400);
-            
-        // }
-
-
-        return view('api/index', compact('universityListArray', 'country', 'name'));
-        
-       
+        $countriesListArray = json_decode($result1, true, 10);
+       // dd($countriesListArray[0]['name']['common']);
+        return view('api/index', compact('universityListArray', 'countriesListArray', 'country', 'name'));
     }
 
+
+    
 
     /**
      * Show the form for creating a new resource.

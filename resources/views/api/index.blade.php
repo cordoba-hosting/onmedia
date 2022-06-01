@@ -17,40 +17,35 @@
 				
 					
 				<div class="row">
-					<form action="{{ url('/filter') }}" method="POST" enctype="multipart/form-data" id="formAltaAviso">
+					<form action="{{ url('filter') }}" method="POST" enctype="multipart/form-data" id="formAltaAviso">
 						@csrf
 						<div class="row">
 							<div class="col-6">
 								<div class="form-group">
-									<label for="name">Nombre:</label>
+									<label for="name">University's name:</label>
 									<input type="text" 
 										name="name" 
 										id="name" 
 										placeholder="Name" 
 										class="form-control mb-2" 
-										value="" />
+										value="{{ isset($name)?$name:old('name') }}" />
 								</div>
 							</div>
-							{{--}}
 							<div class="col-6">    
 								<div class="form-group">
-									<label for="idServicio">Pais: {{$servicios->count()}}</label>
-									<select class="form-control mb-2" id="idServicio" name="idServicio"  onchange="muestraPrecioServicio();" required>
-										@foreach($servicios as $servicio)
-											<option value="{{ $servicio->precio }}">{{$servicio->id}} - {{ $servicio->nombre }}</option>
+									<label for="country">Paises:</label>
+									<select class="form-control mb-2" id="country" name="country">
+										@foreach($countriesListArray as $country)
+											<option value="{{ $country['name']['common'] }}">{{ $country['name']['common'] }}</option>
 										@endforeach
 									</select>
 								</div>
 							</div>
-							{{--}}
 						</div>
 						<button class="btn btn-success" type="submit">Filtrar</button>
 
 					</form>
-					<div class="col-sm-6">{{--$listado->links()--}}</div>
-
-					<div class="col-sm-6"><a href="" class="btn btn-success btn-sm float-right"> Nuevo Servicio</a></div>
-
+					
 				</div>
 
 						<div class="row">
