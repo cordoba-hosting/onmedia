@@ -18,8 +18,4 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::post('/filter', [UniversityController::class, 'consumeApi']);
-Route::get('/list', [UniversityController::class, 'consumeApi']);
-
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [UniversityController::class, 'consumeApi']);
